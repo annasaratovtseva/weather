@@ -461,7 +461,7 @@ begin
 				when 17 then C.utc_offset between 7 and 12 -- города с часовой зоной от UTC+7 до UTC+12
 				when 22 then C.utc_offset between 2 and 6  -- города с часовой зоной от UTC+2 до UTC+6
 	        end
-		and	W.datetime_local >= cast(cast(now() at time zone concat('Etc/GMT', case when C.utc_offset > 0 then '-' else '+' end, abs(C.utc_offset)) as date) as timestamp) - interval '1 day'
+		and W.datetime_local >= cast(cast(now() at time zone concat('Etc/GMT', case when C.utc_offset > 0 then '-' else '+' end, abs(C.utc_offset)) as date) as timestamp) - interval '1 day'
 		and WD.city_id is null
 	group by
 		W.city_id,
