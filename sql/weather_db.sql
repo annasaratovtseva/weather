@@ -21,34 +21,34 @@ drop table if exists stg_weather;
 ----------------------------------------------------------
 create table stg_weather
 (
-	coord_lon				decimal(10, 4),
-	coord_lat				decimal(10, 4),
-	weather_id				int,
-	weather_main			varchar(100),
-	weather_description		varchar(500),
-	weather_icon			char(3),
-	main_temp				decimal(10, 4),
-	main_feels_like			decimal(10, 4),
-	main_temp_min			decimal(10, 4),
-	main_temp_max			decimal(10, 4),
-	main_pressure			decimal(10, 4),
-	main_humidity			decimal(10, 4),
-	main_sea_level			decimal(10, 4),
-	main_grnd_level			decimal(10, 4),
-	visibility				decimal(10, 4),
-	wind_speed				decimal(10, 4),
-	wind_deg				decimal(10, 4),
-	wind_gust				decimal(10, 4),
-	clouds_all				decimal(10, 4),
-	rain_1h					decimal(10, 4),
-	snow_1h					decimal(10, 4),
-	dt						int,
-	sys_country				char(2),
-	sys_sunrise				int,
-	sys_sunset				int,
-	timezone				int,
-	city_id					int,
-	city_name				varchar(100)
+	coord_lon               decimal(10, 4),
+	coord_lat               decimal(10, 4),
+	weather_id              int,
+	weather_main            varchar(100),
+	weather_description     varchar(500),
+	weather_icon            char(3),
+	main_temp               decimal(10, 4),
+	main_feels_like         decimal(10, 4),
+	main_temp_min           decimal(10, 4),
+	main_temp_max           decimal(10, 4),
+	main_pressure           decimal(10, 4),
+	main_humidity           decimal(10, 4),
+	main_sea_level          decimal(10, 4),
+	main_grnd_level         decimal(10, 4),
+	visibility              decimal(10, 4),
+	wind_speed              decimal(10, 4),
+	wind_deg                decimal(10, 4),
+	wind_gust               decimal(10, 4),
+	clouds_all              decimal(10, 4),
+	rain_1h                 decimal(10, 4),
+	snow_1h                 decimal(10, 4),
+	dt                      int,
+	sys_country             char(2),
+	sys_sunrise             int,
+	sys_sunset              int,
+	timezone                int,
+	city_id                 int,
+	city_name               varchar(100)
 );
 
 ----------------------------------------------------------
@@ -56,49 +56,49 @@ create table stg_weather
 ----------------------------------------------------------
 create table dds_cities
 (
-	city_id			int,
-	city_name		varchar(100),
-	country_code	varchar(5),
-	longitude		decimal(10, 4),
-	latitude		decimal(10, 4),
-	timezone		int,
+	city_id         int,
+	city_name       varchar(100),
+	country_code    varchar(5),
+	longitude       decimal(10, 4),
+	latitude        decimal(10, 4),
+	timezone        int,
 	constraint pk_dds_cities primary key (city_id)
 );
 
 create table dds_weather_conditions
 (
-	weather_condition_id			int,
-	weather_condition_name			varchar(500),
-	main_weather_condition_name		varchar(100),
+	weather_condition_id            int,
+	weather_condition_name          varchar(500),
+	main_weather_condition_name     varchar(100),
 	constraint pk_dds_weather_conditions primary key (weather_condition_id)
 );
 
 create table dds_weather
 (
-	weather_id				bigint				generated always as identity,
-	city_id					int,
-	weather_condition_id	int,
-	datetime_utc			timestamp,
-	datetime_unix			int,
-	temperature				decimal(10, 4),
-	temperature_feels_like	decimal(10, 4),
-	temperature_min			decimal(10, 4),
-	temperature_max			decimal(10, 4),
-	pressure				decimal(10, 4),
-	pressure_sea_level		decimal(10, 4),
-	pressure_ground_level	decimal(10, 4),
-	humidity				decimal(10, 4),
-	visibility				decimal(10, 4),
-	wind_speed				decimal(10, 4),
-	wind_direction			decimal(10, 4),
-	wind_gust				decimal(10, 4),
-	cloudiness				decimal(10, 4),
-	precipitation_rain		decimal(10, 4),
-	precipitation_snow		decimal(10, 4),
-	sunrise_datetime_utc	timestamp,
-	sunrise_datetime_unix	int,
-	sunset_datetime_utc		timestamp,
-	sunset_datetime_unix	int,
+	weather_id              bigint             generated always as identity,
+	city_id                 int,
+	weather_condition_id    int,
+	datetime_utc            timestamp,
+	datetime_unix           int,
+	temperature             decimal(10, 4),
+	temperature_feels_like  decimal(10, 4),
+	temperature_min         decimal(10, 4),
+	temperature_max         decimal(10, 4),
+	pressure                decimal(10, 4),
+	pressure_sea_level      decimal(10, 4),
+	pressure_ground_level   decimal(10, 4),
+	humidity                decimal(10, 4),
+	visibility              decimal(10, 4),
+	wind_speed              decimal(10, 4),
+	wind_direction          decimal(10, 4),
+	wind_gust               decimal(10, 4),
+	cloudiness              decimal(10, 4),
+	precipitation_rain      decimal(10, 4),
+	precipitation_snow      decimal(10, 4),
+	sunrise_datetime_utc    timestamp,
+	sunrise_datetime_unix   int,
+	sunset_datetime_utc     timestamp,
+	sunset_datetime_unix    int,
 	constraint pk_dds_weather primary key (weather_id),
 	constraint fk_dds_weather_dds_cities foreign key (city_id) references dds_cities (city_id),
 	constraint fk_dds_weather_dds_weather_conditions foreign key (weather_condition_id) references dds_weather_conditions (weather_condition_id)
@@ -109,46 +109,46 @@ create table dds_weather
 ----------------------------------------------------------
 create table cdm_dim_city
 (
-	city_id			int,
-	city_name		varchar(100),
-	country_code	varchar(5),
-	longitude		decimal(10, 4),
-	latitude		decimal(10, 4),
-	utc_offset		int,
+	city_id         int,
+	city_name       varchar(100),
+	country_code    varchar(5),
+	longitude       decimal(10, 4),
+	latitude        decimal(10, 4),
+	utc_offset      int,
 	constraint pk_cdm_dim_city primary key (city_id)
 );
 
 create table cdm_dim_weather_condition
 (
-	weather_condition_id			int,
-	weather_condition_name			varchar(500),
-	main_weather_condition_name		varchar(100),
+	weather_condition_id            int,
+	weather_condition_name          varchar(500),
+	main_weather_condition_name     varchar(100),
 	constraint pk_cdm_dim_weather_condition primary key (weather_condition_id)
 );
 
 create table cdm_fact_weather
 (
-	weather_id				bigint,
-	city_id					int,
-	weather_condition_id	int,
-	datetime_local			timestamp,
-	temperature				decimal(10, 4),
-	temperature_feels_like	decimal(10, 4),
-	temperature_min			decimal(10, 4),
-	temperature_max			decimal(10, 4),
-	pressure				decimal(10, 4),
-	pressure_sea_level		decimal(10, 4),
-	pressure_ground_level	decimal(10, 4),
-	humidity				decimal(10, 4),
-	visibility				decimal(10, 4),
-	wind_speed				decimal(10, 4),
-	wind_direction			decimal(10, 4),
-	wind_gust				decimal(10, 4),
-	cloudiness				decimal(10, 4),
-	precipitation_rain		decimal(10, 4),
-	precipitation_snow		decimal(10, 4),
-	sunrise_datetime_local	timestamp,
-	sunset_datetime_local	timestamp,
+	weather_id              bigint,
+	city_id                 int,
+	weather_condition_id    int,
+	datetime_local          timestamp,
+	temperature             decimal(10, 4),
+	temperature_feels_like  decimal(10, 4),
+	temperature_min         decimal(10, 4),
+	temperature_max         decimal(10, 4),
+	pressure                decimal(10, 4),
+	pressure_sea_level      decimal(10, 4),
+	pressure_ground_level   decimal(10, 4),
+	humidity                decimal(10, 4),
+	visibility              decimal(10, 4),
+	wind_speed              decimal(10, 4),
+	wind_direction          decimal(10, 4),
+	wind_gust               decimal(10, 4),
+	cloudiness              decimal(10, 4),
+	precipitation_rain      decimal(10, 4),
+	precipitation_snow      decimal(10, 4),
+	sunrise_datetime_local  timestamp,
+	sunset_datetime_local   timestamp,
 	constraint pk_cdm_fact_weather primary key (weather_id),
 	constraint fk_cdm_fact_weather_cdm_dim_city foreign key (city_id) references cdm_dim_city (city_id),
 	constraint fk_cdm_fact_weather_cdm_dim_weather_condition foreign key (weather_condition_id) references cdm_dim_weather_condition (weather_condition_id)
@@ -156,26 +156,26 @@ create table cdm_fact_weather
 
 create table cdm_fact_weather_daily
 (
-	weather_daily_id				bigint			generated always as identity,
-	city_id							int,
-	date_local						date,
-	temperature_daily				decimal(10, 4),
-	temperature_feels_like_daily	decimal(10, 4),
-	temperature_min_daily			decimal(10, 4),
-	temperature_max_daily			decimal(10, 4),
-	pressure_daily					decimal(10, 4),
-	pressure_sea_level_daily		decimal(10, 4),
-	pressure_ground_level_daily		decimal(10, 4),
-	humidity_daily					decimal(10, 4),
-	visibility_daily				decimal(10, 4),
-	wind_speed_daily				decimal(10, 4),
-	wind_direction_daily			decimal(10, 4),
-	wind_gust_daily					decimal(10, 4),
-	cloudiness_daily				decimal(10, 4),
-	precipitation_rain_daily		decimal(10, 4),
-	precipitation_snow_daily		decimal(10, 4),
-	sunrise_datetime_local			timestamp,
-	sunset_datetime_local			timestamp,
+	weather_daily_id                bigint             generated always as identity,
+	city_id                         int,
+	date_local                      date,
+	temperature_daily               decimal(10, 4),
+	temperature_feels_like_daily    decimal(10, 4),
+	temperature_min_daily           decimal(10, 4),
+	temperature_max_daily           decimal(10, 4),
+	pressure_daily                  decimal(10, 4),
+	pressure_sea_level_daily        decimal(10, 4),
+	pressure_ground_level_daily     decimal(10, 4),
+	humidity_daily                  decimal(10, 4),
+	visibility_daily                decimal(10, 4),
+	wind_speed_daily                decimal(10, 4),
+	wind_direction_daily            decimal(10, 4),
+	wind_gust_daily                 decimal(10, 4),
+	cloudiness_daily                decimal(10, 4),
+	precipitation_rain_daily        decimal(10, 4),
+	precipitation_snow_daily        decimal(10, 4),
+	sunrise_datetime_local          timestamp,
+	sunset_datetime_local           timestamp,
 	constraint pk_cdm_fact_weather_daily primary key (weather_daily_id),
 	constraint fk_cdm_fact_weather_daily_cdm_dim_city foreign key (city_id) references cdm_dim_city (city_id)
 );
@@ -402,9 +402,9 @@ begin
 	where   case cdm_dag_schedule_hour_utc
 				when 17 then (DDS_C.timezone / 60 / 60) between 7 and 12 -- города с часовой зоной от UTC+7 до UTC+12
 				when 22 then (DDS_C.timezone / 60 / 60) between 2 and 6  -- города с часовой зоной от UTC+2 до UTC+6
-			end
+	        end
 		and to_timestamp(DDS_W.datetime_unix + DDS_C.timezone) at time zone 'UTC' >= cast(cast(now() at time zone concat('Etc/GMT', case when (DDS_C.timezone / 60 / 60) > 0 then '-' else '+' end, abs(DDS_C.timezone / 60 / 60)) as date) as timestamp) - interval '1 day'
-        and to_timestamp(DDS_W.datetime_unix + DDS_C.timezone) at time zone 'UTC' <  cast(cast(now() at time zone concat('Etc/GMT', case when (DDS_C.timezone / 60 / 60) > 0 then '-' else '+' end, abs(DDS_C.timezone / 60 / 60)) as date) as timestamp)
+		and to_timestamp(DDS_W.datetime_unix + DDS_C.timezone) at time zone 'UTC' <  cast(cast(now() at time zone concat('Etc/GMT', case when (DDS_C.timezone / 60 / 60) > 0 then '-' else '+' end, abs(DDS_C.timezone / 60 / 60)) as date) as timestamp)
 		and W.weather_id is null;
 end;$$;
 
@@ -460,7 +460,7 @@ begin
 	where   case cdm_dag_schedule_hour_utc
 				when 17 then C.utc_offset between 7 and 12 -- города с часовой зоной от UTC+7 до UTC+12
 				when 22 then C.utc_offset between 2 and 6  -- города с часовой зоной от UTC+2 до UTC+6
-			end
+	        end
 		and	W.datetime_local >= cast(cast(now() at time zone concat('Etc/GMT', case when C.utc_offset > 0 then '-' else '+' end, abs(C.utc_offset)) as date) as timestamp) - interval '1 day'
 		and WD.city_id is null
 	group by
